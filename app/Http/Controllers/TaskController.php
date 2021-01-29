@@ -24,4 +24,27 @@ class TaskController extends Controller
 
         return response()->json($result);
     }
+
+    function updateTaskStatus(Request $request){
+        $request->validate([
+            'id' => 'required|integer',
+            'completed_date' => 'nullable|date',
+            'resolution' => 'required'
+        ]);
+
+        $task = Task::find($request->id);
+        $task->completed_date = $request->completed_date;
+        $task->resolution_description = $request->resolution;
+
+        return $task->save();
+    }
+
+    function incompleteTask(Request $request){
+//        return User::find(1)->
+        return Task::incompleteTask();
+    }
+
+    function completeTask(Request $request){
+        return Task::completeTask();
+    }
 }

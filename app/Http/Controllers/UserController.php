@@ -16,6 +16,14 @@ class UserController extends Controller
         return Auth::user()->tasks;
     }
 
+    public function incompleteTasks(){
+        return Auth::user()->incompleteTasks;
+    }
+
+    public function completeTasks(){
+        return Auth::user()->completeTasks;
+    }
+
     public function destroy(){
         return Auth::user()->tokens()->where('id', Auth::user()->currentAccessToken()->id)->delete();
     }
