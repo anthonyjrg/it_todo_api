@@ -30,7 +30,7 @@ class Task extends Model
         return $this->belongsToMany(Task::class, 'tasks_users');
     }
 
-    public static function incompleteTask(){
+    public static function  incompleteTask(){
 //        return User::find(1)->tasks()->whereNull('completed_date');
         return Task::all()->whereNull('completed_date');
     }

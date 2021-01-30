@@ -39,12 +39,11 @@ class TaskController extends Controller
         return $task->save();
     }
 
-    function incompleteTask(Request $request){
-//        return User::find(1)->
+    function incompleteTask(){
         return Task::incompleteTask();
     }
 
-    function completeTask(Request $request){
+    function completeTask(){
         return Task::completeTask();
     }
 }
