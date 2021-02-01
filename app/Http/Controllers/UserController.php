@@ -28,3 +28,4 @@ class UserController extends Controller
         return Auth::user()->tokens()->where('id', Auth::user()->currentAccessToken()->id)->delete();
     }
 }
+
