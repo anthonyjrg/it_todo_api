@@ -46,4 +46,19 @@ class TaskController extends Controller
     function completeTask(){
         return Task::completeTask();
     }
+
+    function taskListCount(){
+        $taskcounts = [
+            "CHB_Complete" => Task::taskAtLocation("CHB", true)->count(),
+            "CHB_Incomplete" => Task::taskAtLocation("CHB", false)->count(),
+            "JFK_Incomplete" => Task::taskAtLocation("JFK", false)->count(),
+            "JFK_Complete" => Task::taskAtLocation("JFK", true)->count(),
+            "MISC_Complete" => Task::taskAtLocation("MISC", true)->count(),
+            "MISC_Incomplete" => Task::taskAtLocation("MISC", false)->count(),
+            "User_Complete" => Auth::user()->completeTasks()->count(),
+            "User_Incomplete" => Auth::user()->incompleteTasks()->count(),
+        ];
+
+        return $taskcounts;
+    }
 }

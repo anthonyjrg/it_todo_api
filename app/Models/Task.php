@@ -31,11 +31,19 @@ class Task extends Model
     }
 
     public static function  incompleteTask(){
-//        return User::find(1)->tasks()->whereNull('completed_date');
         return Task::all()->whereNull('completed_date');
     }
 
     public static function completeTask(){
         return Task::all()->whereNotNull('completed_date');
+    }
+
+    public static function taskAtLocation($location, $completed = null){
+        //Miscellaneous task location are represented in database with null value
+        if($location =="MISC")
+            $location = null;
+        $operator = ($completed ==  null|false ? "=" : "!=");
+
+        return Task::all()->where('location', $location)->where('completed_date', $operator, null);
     }
 }

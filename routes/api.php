@@ -29,9 +29,6 @@ Route::post('/user/test', [UserController::class, 'test']);
 
 Route::post('/sanctum/token', [AuthController::class, 'getLoginToken']);
 
-Route::post('/task/incomplete', [TaskController::class, 'incompleteTask']);
-Route::post('/task/complete', [TaskController::class, 'completeTask']);
-
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/user', [UserController::class, 'index']);
     Route::post('/user/logout', [UserController::class, 'destroy']);
@@ -41,5 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/task/create', [TaskController::class, 'create']);
     Route::post('/task/status/update', [TaskController::class, 'updateTaskStatus']);
 
-//    Route::post('/task/complete', [TaskController::class, 'completeTask']);
+    Route::post('/task/incomplete', [TaskController::class, 'incompleteTask']);
+    Route::post('/task/complete', [TaskController::class, 'completeTask']);
+
+    Route::post('/task/counts', [TaskController::class, 'taskListCount']);
 });
