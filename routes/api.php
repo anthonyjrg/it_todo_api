@@ -41,5 +41,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/task/incomplete', [TaskController::class, 'incompleteTask']);
     Route::post('/task/complete', [TaskController::class, 'completeTask']);
 
+    Route::post('/task/completeByLocation', [TaskController::class, 'completeTaskByLocation']);
+    Route::post('/task/incompleteByLocation', [TaskController::class, 'incompleteTaskByLocation']);
+
     Route::post('/task/counts', [TaskController::class, 'taskListCount']);
 });

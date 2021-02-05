@@ -47,6 +47,16 @@ class TaskController extends Controller
         return Task::completeTask();
     }
 
+    function completeTaskByLocation(Request $request){
+        $location = $request->input('location');
+        return Task::taskAtLocation($location, true)->values();
+    }
+
+    function incompleteTaskByLocation(Request $request){
+        $location = $request->input('location');
+        return Task::taskAtLocation($location, false)->values();
+    }
+
     function taskListCount(){
         $taskcounts = [
             "CHB_Complete" => Task::taskAtLocation("CHB", true)->count(),
