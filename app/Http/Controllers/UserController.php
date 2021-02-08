@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +27,10 @@ class UserController extends Controller
 
     public function destroy(){
         return Auth::user()->tokens()->where('id', Auth::user()->currentAccessToken()->id)->delete();
+    }
+
+    public function all(){
+        return User::all(["id", "fName", "lName", "pay_number", "email"])->values();
     }
 }
 

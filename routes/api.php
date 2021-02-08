@@ -28,9 +28,11 @@ Route::post('/tokens/create', function (Request $request) {
 Route::post('/user/test', [UserController::class, 'test']);
 
 Route::post('/sanctum/token', [AuthController::class, 'getLoginToken']);
+Route::post('/users', [UserController::class, User::all()->values()]);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/user', [UserController::class, 'index']);
+    Route::post('/users', [UserController::class, 'all']);
     Route::post('/user/logout', [UserController::class, 'destroy']);
     Route::post('/user/tasks', [UserController::class, 'tasks']);
     Route::post('/user/tasks/incomplete', [UserController::class, 'incompleteTasks']);
