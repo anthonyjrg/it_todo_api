@@ -30,7 +30,7 @@ class UserController extends Controller
     }
 
     public function all(){
-        return User::all(["id", "fName", "lName", "pay_number", "email"])->values();
+        return User::all(["id", "fName", "lName", "pay_number", "email", "rank"])->values();
     }
 }
 
