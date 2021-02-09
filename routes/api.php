@@ -38,6 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/user/tasks/incomplete', [UserController::class, 'incompleteTasks']);
     Route::post('/user/tasks/complete', [UserController::class, 'completeTasks']);
     Route::post('/task/create', [TaskController::class, 'create']);
+    Route::post('/task/delete', [TaskController::class, 'delete']);
+    Route::post('/task/save', [TaskController::class, 'update']);
     Route::post('/task/status/update', [TaskController::class, 'updateTaskStatus']);
 
     Route::post('/task/incomplete', [TaskController::class, 'incompleteTask']);

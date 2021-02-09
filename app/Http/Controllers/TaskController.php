@@ -12,17 +12,55 @@ class TaskController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'location' => 'string'
         ]);
 
         $task = new Task();
         $task->title = $request->title;
         $task->task_description = $request->description;
+        $task->location = $request->location;
+        $task->assigned_to = $request->assigned_to;
+        $task->due_date = $request->due_date;
         $task->created_by = Auth::user()->id;
 
         //Save task
         $result = Auth::user()->tasks()->save($task);
 
         return response()->json($result);
+    }
+
+    function delete(Request $request){
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        //Save task
+        $result = Task::find($request->input('id'))->delete();
+
+        return response()->json($result);
+    }
+
+    function update(Request $request){
+        $request->validate([
+            'id' => 'required|integer',
+            'completed_date' => 'nullable',
+            'resolution' => 'nullable'
+        ]);
+
+        $task = Task::find($request->id);
+        $task->title = $request->input('title');
+        if($request->input('completed_date') != 'null' || $request->input('completed_date') == null)
+            $task->completed_date = $request->input('completed_date');
+
+        $task->resolution_description = $request->input('resolution');
+        if($request->input('due_date')!=null)
+            $task->due_date = $request->input('due_date');
+        $task->location = $request->input('location');
+        $task->assigned_to = json_decode($request->input('assigned_to'));
+        if($request->input('completed_date')!=null)
+            $task->completed_by = Auth::user()->id;
+
+        return $task->save();
     }
 
     function updateTaskStatus(Request $request){
@@ -49,12 +87,16 @@ class TaskController extends Controller
 
     function completeTaskByLocation(Request $request){
         $location = $request->input('location');
-        return Task::taskAtLocation($location, true)->values();
+        return Task::taskAtLocation($location, true)->sortBy(
+            "due_date"
+        )->values();
     }
 
     function incompleteTaskByLocation(Request $request){
         $location = $request->input('location');
-        return Task::taskAtLocation($location, false)->values();
+        return Task::taskAtLocation($location, false)->sortBy(
+                "created_at"
+            )->values();
     }
 
     function taskListCount(){

@@ -22,8 +22,8 @@ class CreateTasksTable extends Migration
             $table->dateTime('due_date')->nullable();
             $table->dateTime('completed_date')->nullable();
             $table->bigInteger('created_by');
-            $table->json('assigned_to')->nullable();
-            $table->json('completed_by')->nullable();
+            $table->string('assigned_to')->nullable();
+            $table->string('completed_by')->nullable();
             $table->string('location')->nullable();
         });
     }
