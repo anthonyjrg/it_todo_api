@@ -26,6 +26,7 @@ class Task extends Model
         'location'
     ];
 
+
     public function user(){
         return $this->belongsToMany(Task::class, 'tasks_users');
     }

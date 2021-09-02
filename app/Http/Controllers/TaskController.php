@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Events\TaskCreated;
 
-class TaskController extends Controller
+class TaskController extends Controller implements ShouldBroadcast
 {
     function create(Request $request){
         $request->validate([
@@ -25,6 +27,10 @@ class TaskController extends Controller
 
         //Save task
         $result = Auth::user()->tasks()->save($task);
+
+        if($result)
+            event(new TaskCreated($task->title));
+
 
         return response()->json($result);
     }
@@ -112,5 +118,10 @@ class TaskController extends Controller
         ];
 
         return $taskcounts;
+    }
+
+    public function broadcastOn()
+    {
+        // TODO: Implement broadcastOn() method.
     }
 }
